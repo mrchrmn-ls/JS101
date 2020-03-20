@@ -1,0 +1,28 @@
+{
+  "EN": {
+    "greeting": "Welcome to Calculator!",
+    "firstNumber": "What's the first number?",
+    "secondNumber": "What's the second number?",
+    "validNumber": "Please enter a valid number.",
+    "whatOperation": "What operation do you want to perform?",
+    "operations": "1) Addition  2) Subtraction  3) Multiplication  4) Division",
+    "validOperation": "Please choose a valid operation.",
+    "result": "The result is: ",
+    "oneMore": "Would you like to perform another calculation? (y / n)",
+    "goodbye": "Thanks for playing.",
+    "yesWords": ["Y", "y", "Yes", "yes"]
+  },
+  "DE": {
+    "greeting": "Willkommen beim Rechner!",
+    "firstNumber": "Wie lautet die erste Zahl?",
+    "secondNumber": "Wie lautet die zweite Zahl?",
+    "validNumber": "Bitte geben Sie eine gültige Zahl ein.",
+    "whatOperation": "Welche Rechenart möchten Sie ausführen?",
+    "operations": "1) Addition  2) Subtraktion  3) Multiplikation  4) Division",
+    "validOperation": "Bitte wählen Sie eine gültige Rechenart.",
+    "result": "Das Ergebnis ist: ",
+    "oneMore": "Möchten Sie eine weitere Berechnung durchführen? (j / n)",
+    "goodbye": "Danke fürs Mitspielen.",
+    "yesWords": ["J", "j", "Ja", "ja"]
+  }
+}

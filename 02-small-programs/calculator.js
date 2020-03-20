@@ -11,7 +11,7 @@ console.log("What's the second number?");
 let number2 = Number(rlsync.question());
 
 // Ask user for operation to perform.
-console.log('What operation do you want to perform?\n' 
+console.log('What operation do you want to perform?\n'
   + '1) Addition 2) Subtraction 3) Multiplication 4) Division');
 let operation = Number(rlsync.question());
 

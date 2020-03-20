@@ -1,0 +1,12 @@
+{
+  "greeting": "Welcome to Calculator!",
+  "firstNumber": "What's the first number?",
+  "secondNumber": "What's the second number?",
+  "validNumber": "Please enter a valid number.",
+  "whatOperation": "What operation do you want to perform?",
+  "operations": "1) Addition  2) Subtraction  3) Multiplication  4) Division",
+  "validOperation": "Please choose a valid operation.",
+  "result": "The result is",
+  "oneMore": "Would you like to perform another calculation? (y / n)",
+  "yes": ["Y", "y", "Yes", "yes"]
+}
