@@ -6,9 +6,8 @@ const MESSAGES = require('./calculator-MESSAGES.json');
 const LANGUAGE = process.argv[2] ? process.argv[2] : 'EN';
 
 
-function prompt(key) {
-  let message = MESSAGES[LANGUAGE][key];
-  console.log(`=> ${message}`);
+function prompt(msgkey) {
+  console.log(`=> ${MESSAGES[LANGUAGE][msgkey]}`);
 }
 
 function invalidNumber(number) {
