@@ -17,6 +17,7 @@ if (process.argv[2] && Object.keys(MESSAGES).includes(process.argv[2])) {
 console.clear();
 
 prompt("greeting", true);
+console.log("");
 
 while (true) {
   console.log("---------------------------------------\n");
@@ -41,9 +42,8 @@ while (true) {
 // FUNCTION
 // DECLARATIONS
 
-function prompt(key, newline = false) {
+function prompt(key) {
   console.log(MESSAGES[LANGUAGE][key]);
-  if (newline) console.log("");
 }
 
 
