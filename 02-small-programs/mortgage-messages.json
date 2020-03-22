@@ -15,7 +15,7 @@
     "loanAmount": "Bitte geben Sie die Höhe des Kredits ein.",
     "APR": "Bitte geben Sie den Jahreszinssatz ein (in Prozent, z.B. 2.5 oder 7).",
     "loanDuration": "Bitte geben Sie Laufzeit in Jahren ein.",
-    "invalid": "Ungültige Eingabe. Bitte geben Sie eine positive zahl ein.",
+    "invalid": "Ungültige Eingabe. Bitte geben Sie eine positive Zahl ein.",
     "monthlyPayment": "Ihre monatliche Rate beträgt: ",
     "currency": "€",
     "anotherCalculation": "Noch eine Rechnunt? (j / n)",
