@@ -1,0 +1,28 @@
+{
+  "EN": {
+    "greeting": "Welcome to Mortgage Calculator!",
+    "loanAmount": "Enter the desired loan amount.",
+    "APR": "Enter the annual percentage rate in percent (eg. 2.5 or 7).",
+    "loanDuration": "Enter the loan duration in years.",
+    "invalid": "Invalid input.",
+    "fullMonths": "The duration in years must equal full months.",
+    "monthlyPayment": "Your monthly payment is: ",
+    "currency": "$",
+    "anotherCalculation": "Another calculation? (y / n)",
+    "yesNo": ["y", "n"],
+    "invalidAnswer": "Please enter y or n for 'yes' or 'no'."
+  },
+  "DE": {
+    "greeting": "Willkommen beim Kredit-Rechner!",
+    "loanAmount": "Bitte geben Sie die Höhe des Kredits ein.",
+    "APR": "Bitte geben Sie den Jahreszinssatz ein (in Prozent, z.B. 2.5 oder 7).",
+    "loanDuration": "Bitte geben Sie Laufzeit in Jahren ein.",
+    "invalid": "Ungültige Eingabe.",
+    "fullMonths": "Die Laufzeit in Jahren muss ganzen Monaten entsprechen.",
+    "monthlyPayment": "Ihre monatliche Rate beträgt: ",
+    "currency": "€",
+    "anotherCalculation": "Noch eine Rechnunt? (j / n)",
+    "yesNo": ["j", "n"],
+    "invalidAnswer": "Bitte geben Sie j oder n für \"ja\" oder \"nein\" ein."
+  }
+}
