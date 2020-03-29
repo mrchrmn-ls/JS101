@@ -1,4 +1,4 @@
 # ignore node_modules
 /02-small-programs/node_modules/*
 package-lock.json
-/Exercises/*/node_modules/*
+/Exercises/01/node_modules/*
