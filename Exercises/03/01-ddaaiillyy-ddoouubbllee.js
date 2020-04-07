@@ -1,4 +1,4 @@
-let crunch = str => {
+/*let crunch = str => {
   let previous = "";
   let crunchedStr = "";
   for (i = 0; i < str.length; i += 1) {
@@ -8,10 +8,10 @@ let crunch = str => {
     }
   }
   return crunchedStr;
-};
+};*/
 
 
-crunch = str => str
+const crunch = str => str
                 .split("")
                 .reduce((acc, element) => {
                   if (!acc.endsWith(element)) {
