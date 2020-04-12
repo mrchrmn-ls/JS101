@@ -30,7 +30,6 @@ let winner = "";
 
 // 1. Game board
 
-
 function newBoard() {
   let board = {};
   for (let square = 1; square <= FIELD_SIZE; square += 1) {
@@ -92,6 +91,7 @@ function getValidSquare() {
 
   return answer;
 }
+
 
 // 3. Computer
 
