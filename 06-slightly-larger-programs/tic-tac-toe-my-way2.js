@@ -42,7 +42,7 @@ function newBoard() {
 function displayBoard() {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  console.log(`You are ${PLAYER_SYMBOL} <- and the computer is ${COMPUTER_SYMBOL}.\n`);
+  console.log(`You are ${PLAYER_SYMBOL} and the computer is ${COMPUTER_SYMBOL}.\n`);
   console.log(`       |       |       `);
   console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${squareNumber(7)}   ${squareNumber(8)}   ${squareNumber(9)}`);
   console.log(`       |       |       `);
