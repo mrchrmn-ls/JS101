@@ -108,11 +108,7 @@ function calculateComputerMove() {
 function gameWon() {
   checkWin(COMPUTER_SYMBOL);
   checkWin(PLAYER_SYMBOL);
-  if (winner !== "") {
-    return true;
-  } else {
-    return false;
-  }
+  return winner !== "";
 }
 
 
@@ -143,11 +139,7 @@ function displayWinner() {
 
 
 function boardFull() {
-  if (emptySquares().length === 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return emptySquares().length === 0;
 }
 
 
@@ -155,12 +147,7 @@ function playAgain() {
   console.log("Do you want to play again? (y/n)");
   let input = getValidAnswer();
 
-  if (input === "y") {
-    return true;
-  } else {
-    return false;
-  }
-
+  return input === "y";
 }
 
 
