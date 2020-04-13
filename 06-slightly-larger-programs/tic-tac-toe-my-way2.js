@@ -189,11 +189,11 @@ while (true) {
 
   // game over
 
+  displayBoard();
+
   if (gameWon()) {
-    displayBoard();
     displayWinner();
   } else if (boardFull()) {
-    displayBoard();
     console.log("The board is full, there is no winner.\n");
   }
 
