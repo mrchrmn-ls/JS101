@@ -44,21 +44,22 @@ function displayBoard() {
   console.log("Let's play Tic Tac Toe!\n");
   console.log(`You are ${PLAYER_SYMBOL} and the computer is ${COMPUTER_SYMBOL}.\n`);
   console.log(`       |       |       `);
-  console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${squareNumber(7)}   ${squareNumber(8)}   ${squareNumber(9)}`);
+  console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
   console.log(`       |       |       `);
   console.log(`-------+-------+-------`);
   console.log(`       |       |`);
-  console.log(`   ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${squareNumber(4)}   ${squareNumber(5)}   ${squareNumber(6)}`);
+  console.log(`   ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
   console.log(`       |       |       `);
   console.log(`-------+-------+-------`);
   console.log(`       |       |       `);
-  console.log(`   ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${squareNumber(1)}   ${squareNumber(2)}   ${squareNumber(3)}`);
+  console.log(`   ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
   console.log(`       |       |       \n`);
 }
 
 
-function squareNumber(square) {
-  if ((board[square] === EMPTY) && winner === "") { // only show numbers when game is still going
+function displayNumber(square) {
+  // only show the number when the square is empty and the game is still going
+  if ((board[square] === EMPTY) && winner === "") {
     return square;
   } else {
     return EMPTY;
@@ -117,12 +118,12 @@ function gameWon() {
 
 function checkWin(symbol) {
 
-  // create array of all square with the symbol
+  // create array of all squares with the symbol
   let symbolSquares = Object.keys(board).filter(key => board[key] === symbol);
 
   // check if symbolSquares includes any of the winning square combinations
   WINNING_SQUARES.forEach(arr => {
-    if (arr.every(number => symbolSquares.indexOf(number.toString()) !== -1)) {
+    if (arr.every(number => symbolSquares.includes(number.toString()) ) ) {
       winner = symbol;
     }
   });
