@@ -115,75 +115,33 @@ function newBoard() {
 
 
 function displayBoard(board, layout, gameNumber, scores) {
-  switch (layout) {
-    case "p":
-      displayPhoneBoard(board, gameNumber, scores);
-      break;
-    case "n":
-      displayNumPadBoard(board, gameNumber, scores);
-      break;
-    case "no controls":
-      displayBoardNoControls(board, gameNumber, scores);
-  }
-}
-
-
-function displayPhoneBoard(board, gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
   displayScores(gameNumber, scores);
   console.log(`          |       |       `);
-  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(board, 1)}   ${displayNumber(board, 2)}   ${displayNumber(board, 3)}`);
+  console.log(layout === "p" ? display123row(board, layout) : display789row(board, layout));
   console.log(`          |       |       `);
   console.log(`   -------+-------+-------`);
   console.log(`          |       |`);
-  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(board, 4)}   ${displayNumber(board, 5)}   ${displayNumber(board, 6)}`);
+  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(board, 4, layout)}   ${displayNumber(board, 5, layout)}   ${displayNumber(board, 6, layout)}`);
   console.log(`          |       |       `);
   console.log(`   -------+-------+-------`);
   console.log(`          |       |       `);
-  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(board, 7)}   ${displayNumber(board, 8)}   ${displayNumber(board, 9)}`);
+  console.log(layout === "n" ? display123row(board, layout) : display789row(board, layout));
   console.log(`          |       |       \n`);
 }
 
+function display123row(board, layout) {
+  return `      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(board, 1, layout)}   ${displayNumber(board, 2, layout)}   ${displayNumber(board, 3, layout)}`;
+}
 
-function displayNumPadBoard(board, gameNumber, scores) {
-  console.clear();
-  console.log("Let's play Tic Tac Toe!\n");
-  displayScores(gameNumber, scores);
-  console.log(`          |       |       `);
-  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(board, 7)}   ${displayNumber(board, 8)}   ${displayNumber(board, 9)}`);
-  console.log(`          |       |       `);
-  console.log(`   -------+-------+-------`);
-  console.log(`          |       |`);
-  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(board, 4)}   ${displayNumber(board, 5)}   ${displayNumber(board, 6)}`);
-  console.log(`          |       |       `);
-  console.log(`   -------+-------+-------`);
-  console.log(`          |       |       `);
-  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(board, 1)}   ${displayNumber(board, 2)}   ${displayNumber(board, 3)}`);
-  console.log(`          |       |       \n`);
+function display789row(board, layout) {
+  return `      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(board, 7, layout)}   ${displayNumber(board, 8, layout)}   ${displayNumber(board, 9, layout)}`;
 }
 
 
-function displayBoardNoControls(board, gameNumber, scores) {
-  console.clear();
-  console.log("Let's play Tic Tac Toe!\n");
-  displayScores(gameNumber, scores);
-  console.log(`          |       |       `);
-  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}`);
-  console.log(`          |       |       `);
-  console.log(`   -------+-------+-------`);
-  console.log(`          |       |`);
-  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}`);
-  console.log(`          |       |       `);
-  console.log(`   -------+-------+-------`);
-  console.log(`          |       |       `);
-  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}`);
-  console.log(`          |       |       \n`);
-}
-
-
-function displayNumber(board, square) {
-  if ((board[square] === EMPTY)) {
+function displayNumber(board, square, layout) {
+  if ((board[square] === EMPTY) && (layout !== "no controls")) {
     return square;
   } else {
     return EMPTY;
