@@ -64,10 +64,10 @@ function chooseControlLayout() {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
   console.log("Please choose your control layout to place your moves:\n");
-  console.log("     1  2  3                  7  8  9");
+  console.log("     7  8  9                  1  2  3");
   console.log("     4  5  6        or        4  5  6");
-  console.log("     7  8  9                  1  2  3\n");
-  console.log("     [p]hone                  [n]umerical keypad\n");
+  console.log("     1  2  3                  7  8  9\n");
+  console.log("[n]umerical keypad            [p]hone\n");
 
   let layout = getValidAnswer(["p", "n"]);
   return layout;
@@ -92,7 +92,7 @@ function determineFirstPlayer() {
 function askForFirstPlayer() {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  console.log("Who should go first? Chose [h]uman, [c]omputer or [r]andom.");
+  console.log("Who should begin the first game? Chose [h]uman, [c]omputer or [r]andom.");
 
   let firstPlayer = getValidAnswer(["h", "c", "r"]);
 
@@ -135,54 +135,54 @@ function displayBoard(layout, gameNumber, scores) {
 function displayPhoneBoard(gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  displayscores(gameNumber, scores);
-  console.log(`       |       |       `);
-  console.log(`   ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
-  console.log(`       |       |       `);
-  console.log(`-------+-------+-------`);
-  console.log(`       |       |`);
-  console.log(`   ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
-  console.log(`       |       |       `);
-  console.log(`-------+-------+-------`);
-  console.log(`       |       |       `);
-  console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
-  console.log(`       |       |       \n`);
+  displayScores(gameNumber, scores);
+  console.log(`          |       |       `);
+  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
+  console.log(`          |       |       `);
+  console.log(`   -------+-------+-------`);
+  console.log(`          |       |`);
+  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
+  console.log(`          |       |       `);
+  console.log(`   -------+-------+-------`);
+  console.log(`          |       |       `);
+  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
+  console.log(`          |       |       \n`);
 }
 
 
 function displayNumPadBoard(gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  displayscores(gameNumber, scores);
-  console.log(`       |       |       `);
-  console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
-  console.log(`       |       |       `);
-  console.log(`-------+-------+-------`);
-  console.log(`       |       |`);
-  console.log(`   ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
-  console.log(`       |       |       `);
-  console.log(`-------+-------+-------`);
-  console.log(`       |       |       `);
-  console.log(`   ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
-  console.log(`       |       |       \n`);
+  displayScores(gameNumber, scores);
+  console.log(`          |       |       `);
+  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
+  console.log(`          |       |       `);
+  console.log(`   -------+-------+-------`);
+  console.log(`          |       |`);
+  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
+  console.log(`          |       |       `);
+  console.log(`   -------+-------+-------`);
+  console.log(`          |       |       `);
+  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
+  console.log(`          |       |       \n`);
 }
 
 
 function displayBoardNoControls(gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  displayscores(gameNumber, scores);
-  console.log(`       |       |       `);
-  console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}`);
-  console.log(`       |       |       `);
-  console.log(`-------+-------+-------`);
-  console.log(`       |       |`);
-  console.log(`   ${board[4]}   |   ${board[5]}   |   ${board[6]}`);
-  console.log(`       |       |       `);
-  console.log(`-------+-------+-------`);
-  console.log(`       |       |       `);
-  console.log(`   ${board[1]}   |   ${board[2]}   |   ${board[3]}`);
-  console.log(`       |       |       \n`);
+  displayScores(gameNumber, scores);
+  console.log(`          |       |       `);
+  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}`);
+  console.log(`          |       |       `);
+  console.log(`   -------+-------+-------`);
+  console.log(`          |       |`);
+  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}`);
+  console.log(`          |       |       `);
+  console.log(`   -------+-------+-------`);
+  console.log(`          |       |       `);
+  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}`);
+  console.log(`          |       |       \n`);
 }
 
 
@@ -195,7 +195,7 @@ function displayNumber(square) {
 }
 
 
-function displayscores(gameNumber, scores) {
+function displayScores(gameNumber, scores) {
   console.log(`This is game ${gameNumber}. The first to reach ${GAMES_TO_WIN} points wins.\n`);
   console.log(`HUMAN (${CONTESTANTS.human.symbol})   ${scores[0]} : ${scores[1]}   (${CONTESTANTS.computer.symbol}) COMPUTER \n`);
 }
@@ -225,13 +225,45 @@ function getHumanMove() {
 
 
 function calculateComputerMove() {
-  let choice = Math.floor(emptySquares().length * Math.random());
-  let square = emptySquares()[choice];
+  let square = emptySquares()[
+                 Math.floor(emptySquares().length * Math.random())
+               ];
+
+  if (emptySquares().includes("5")) {
+    square = "5";
+  }
+
+  if (winningMoveFound("human")) {
+    square = winningMoveFound("human");
+  }
+
+  if (winningMoveFound("computer")) {
+    square = winningMoveFound("computer");
+  }
+
   board[square] = CONTESTANTS.computer.symbol;
 }
 
 
-function isWinner(player) {
+function winningMoveFound(player) {
+  let testBoard = Object.assign({}, board);
+
+  for (let index = 0; index < emptySquares().length; index += 1) {
+    testBoard[emptySquares()[index]] = CONTESTANTS[player].symbol;
+
+    if (isWinner(player, testBoard)) {
+      return emptySquares()[index];
+
+    } else {
+      testBoard = Object.assign({}, board);
+    }
+  }
+
+  return false;
+}
+
+
+function isWinner(player, board) {
   let isWinner = false;
 
   let symbolSquares = Object.keys(board).filter(key =>
@@ -308,45 +340,45 @@ function playAgain() {
 let layout = chooseControlLayout();
 let currentPlayer = determineFirstPlayer();
 
-while (true) {
+while (true) { // match
 
   let scores = [0, 0];
   let gameNumber = 1;
 
-  while (true) {
+  while (true) { // game
 
     board = newBoard();
 
-    while (true) {
+    while (true) { // moves
       displayBoard(layout, gameNumber, scores);
-
       recordMove(currentPlayer);
-      if (isWinner(currentPlayer) || boardFull()) break;
+
+      if (isWinner(currentPlayer, board) || boardFull()) break;
 
       currentPlayer = setNextPlayer(currentPlayer);
     }
 
     displayBoard("no controls", gameNumber, scores);
 
-    if (isWinner(currentPlayer)) {
-
+    if (isWinner(currentPlayer, board)) {
       displayWinner(currentPlayer);
       updateScores(scores, currentPlayer);
 
     } else if (boardFull()) {
-
-      console.log("The board is full, there is no winner.\n");
+      console.log("The board is full, nobody won this game.\n");
 
     }
 
     if (Math.max(...scores) < GAMES_TO_WIN) {
       gameNumber += 1;
       currentPlayer = setNextPlayer(currentPlayer);
-      rlsync.question("Press enter to proceed to the next round.");
+      rlsync.question("Press Enter to proceed to the next round.");
       continue;
+
     } else {
       displayBoard("no controls", gameNumber, scores);
       displayMatchWinner(scores);
+
     }
 
     break;
