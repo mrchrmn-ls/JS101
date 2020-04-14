@@ -15,14 +15,12 @@ const WINNING_SQUARES = [
 
 const FIRST_PLAYER = "choose"; // possible values: human, computer, choose, random
 
-let CONTESTANTS = {
+const CONTESTANTS = {
   human: {
     symbol: "X",
-    score: 0
   },
   computer: {
     symbol: "O",
-    score: 0
   }
 };
 
