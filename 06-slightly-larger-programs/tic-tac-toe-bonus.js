@@ -21,14 +21,21 @@ let winner = "";
 
 // FUNCTION
 // DEFINITIONS
-//
-// 1. Game Board
-// 2. Player
-// 3. Computer
-// 4. Win or Tie?
 
 
-// 1. Game board
+function chooseControlLayout() {
+  console.clear();
+  console.log("Let's play Tic Tac Toe!\n");
+  console.log("Please choose your control layout to place your moves:\n")
+  console.log("     1  2  3                  7  8  9");
+  console.log("     4  5  6        or        4  5  6");
+  console.log("     7  8  9                  1  2  3\n");
+  console.log("     [p]hone                  [n]umerical keypad\n")
+
+  let layout = getValidAnswer(["p", "n"]);
+  return layout;
+}
+
 
 function newBoard() {
   let board = {};
@@ -39,7 +46,37 @@ function newBoard() {
 }
 
 
-function displayBoard() {
+function displayBoard(layout) {
+  switch (layout) {
+    case "p": 
+      displayPhoneBoard();
+      break;
+    case "n":
+      displayNumPadBoard();
+      break;
+  }
+}
+
+
+function displayPhoneBoard() {
+  console.clear();
+  console.log("Let's play Tic Tac Toe!\n");
+  console.log(`You are ${PLAYER_SYMBOL} and the computer is ${COMPUTER_SYMBOL}.\n`);
+  console.log(`       |       |       `);
+  console.log(`   ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
+  console.log(`       |       |       `);
+  console.log(`-------+-------+-------`);
+  console.log(`       |       |`);
+  console.log(`   ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
+  console.log(`       |       |       `);
+  console.log(`-------+-------+-------`);
+  console.log(`       |       |       `);
+  console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
+  console.log(`       |       |       \n`);
+}
+
+
+function displayNumPadBoard() {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
   console.log(`You are ${PLAYER_SYMBOL} and the computer is ${COMPUTER_SYMBOL}.\n`);
@@ -72,21 +109,26 @@ function emptySquares() {
 }
 
 
-// 2. Player
+function joinOr(arr, delimiter = ", ", word = "or") {
+  if (arr.length === 2) {
+    return arr[0] + " " + word + " " + arr[1];
+  }
 
-function getPlayerMove() {
-  console.log(`Pick an empty square:`);
-  let square = getValidSquare();
-  board[square] = PLAYER_SYMBOL;
+  let result = "";
+  for (let index = 0; index < arr.length - 1; index += 1) {
+    result += arr[index] + delimiter;
+  }
+  result += word + " " + arr[arr.length - 1];
+
+  return result;
 }
 
 
-function getValidSquare() {
+function getValidAnswer(allowedAnswers) {
   let answer = rlsync.question("> ").trim();
 
-  while (!emptySquares().includes(answer)) {
-    displayBoard();
-    console.log(`Please enter an EMPTY square's NUMBER:`);
+  while (!allowedAnswers.includes(answer.toLowerCase())) {
+    console.log(`Please enter ${joinOr(allowedAnswers)}.`);
     answer = rlsync.question("> ").trim();
   }
 
@@ -94,7 +136,12 @@ function getValidSquare() {
 }
 
 
-// 3. Computer
+function getPlayerMove() {
+  console.log(`Pick an empty square:`);
+  let square = getValidAnswer(emptySquares());
+  board[square] = PLAYER_SYMBOL;
+}
+
 
 function calculateComputerMove() {
   let choice = Math.floor(emptySquares().length * Math.random());
@@ -103,25 +150,17 @@ function calculateComputerMove() {
 }
 
 
-// 4. Win or tie?
-
 function gameWon() {
   checkWin(COMPUTER_SYMBOL);
   checkWin(PLAYER_SYMBOL);
-  if (winner !== "") {
-    return true;
-  } else {
-    return false;
-  }
+  return winner !== "";
 }
 
 
 function checkWin(symbol) {
 
-  // create array of all squares with the symbol
   let symbolSquares = Object.keys(board).filter(key => board[key] === symbol);
 
-  // check if symbolSquares includes any of the winning square combinations
   WINNING_SQUARES.forEach(arr => {
     if (arr.every(number => symbolSquares.includes(number.toString()) ) ) {
       winner = symbol;
@@ -143,36 +182,14 @@ function displayWinner() {
 
 
 function boardFull() {
-  if (emptySquares().length === 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return emptySquares().length === 0;
 }
 
 
 function playAgain() {
   console.log("Do you want to play again? (y/n)");
-  let input = getValidAnswer();
-
-  if (input === "y") {
-    return true;
-  } else {
-    return false;
-  }
-
-}
-
-
-function getValidAnswer() {
-  let answer = rlsync.question("> ");
-
-  while (!["y", "n"].includes(answer.toLowerCase())) {
-    console.log("Please enter 'y' or 'n'.");
-    answer = rlsync.question("> ");
-  }
-
-  return answer;
+  let input = getValidAnswer(["y", "n"]);
+  return input === "y";
 }
 
 
@@ -181,14 +198,14 @@ function getValidAnswer() {
 // PROGRAM
 //
 
+let layout = chooseControlLayout();
 
 while (true) {
 
   board = newBoard();
   winner = "";
-  displayBoard();
+  displayBoard(layout);
 
-  // moves loop
 
   while (true) {
     getPlayerMove();
@@ -197,12 +214,11 @@ while (true) {
     calculateComputerMove();
     if (gameWon() || boardFull()) break;
 
-    displayBoard();
+    displayBoard(layout);
   }
 
-  // game over
 
-  displayBoard();
+  displayBoard(layout);
 
   if (gameWon()) {
     displayWinner();
