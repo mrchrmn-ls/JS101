@@ -26,11 +26,11 @@ let winner = "";
 function chooseControlLayout() {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  console.log("Please choose your control layout to place your moves:\n")
+  console.log("Please choose your control layout to place your moves:\n");
   console.log("     1  2  3                  7  8  9");
   console.log("     4  5  6        or        4  5  6");
   console.log("     7  8  9                  1  2  3\n");
-  console.log("     [p]hone                  [n]umerical keypad\n")
+  console.log("     [p]hone                  [n]umerical keypad\n");
 
   let layout = getValidAnswer(["p", "n"]);
   return layout;
@@ -48,7 +48,7 @@ function newBoard() {
 
 function displayBoard(layout) {
   switch (layout) {
-    case "p": 
+    case "p":
       displayPhoneBoard();
       break;
     case "n":
