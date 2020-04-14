@@ -8,6 +8,17 @@ const EMPTY = " ";
 const PLAYER_SYMBOL = "X";
 const COMPUTER_SYMBOL = "O";
 
+const CONTESTANTS = {
+  player: {
+    symbol: "X",
+    score: 0
+  },
+  computer: {
+    symbol: "O",
+    score: 0
+  }
+};
+
 const WINNING_SQUARES = [
   [1, 2, 3], [4, 5, 6], [7, 8, 9], // rows
   [1, 4, 7], [2, 5, 8], [3, 6, 9], // columns
@@ -26,11 +37,11 @@ let winner = "";
 function chooseControlLayout() {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  console.log("Please choose your control layout to place your moves:\n")
+  console.log("Please choose your control layout to place your moves:\n");
   console.log("     1  2  3                  7  8  9");
   console.log("     4  5  6        or        4  5  6");
   console.log("     7  8  9                  1  2  3\n");
-  console.log("     [p]hone                  [n]umerical keypad\n")
+  console.log("     [p]hone                  [n]umerical keypad\n");
 
   let layout = getValidAnswer(["p", "n"]);
   return layout;
@@ -48,7 +59,7 @@ function newBoard() {
 
 function displayBoard(layout) {
   switch (layout) {
-    case "p": 
+    case "p":
       displayPhoneBoard();
       break;
     case "n":
@@ -95,7 +106,6 @@ function displayNumPadBoard() {
 
 
 function displayNumber(square) {
-  // only show the number when the square is empty and the game is still going
   if ((board[square] === EMPTY) && winner === "") {
     return square;
   } else {
@@ -172,10 +182,10 @@ function checkWin(symbol) {
 function displayWinner() {
   console.log("WE HAVE A WINNER:");
   switch (winner) {
-    case PLAYER_SYMBOL:
+    case "player":
       console.log("It's you! You have won, congratulations!\n");
       break;
-    case COMPUTER_SYMBOL:
+    case "computer":
       console.log("Sorry, it's the computer actually.\n");
   }
 }
@@ -197,6 +207,7 @@ function playAgain() {
 // MAIN
 // PROGRAM
 //
+
 
 let layout = chooseControlLayout();
 
