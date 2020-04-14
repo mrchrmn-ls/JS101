@@ -24,8 +24,6 @@ const CONTESTANTS = {
   }
 };
 
-let board = {};
-
 
 // FUNCTION
 // DEFINITIONS
@@ -116,57 +114,57 @@ function newBoard() {
 }
 
 
-function displayBoard(layout, gameNumber, scores) {
+function displayBoard(board, layout, gameNumber, scores) {
   switch (layout) {
     case "p":
-      displayPhoneBoard(gameNumber, scores);
+      displayPhoneBoard(board, gameNumber, scores);
       break;
     case "n":
-      displayNumPadBoard(gameNumber, scores);
+      displayNumPadBoard(board, gameNumber, scores);
       break;
     case "no controls":
-      displayBoardNoControls(gameNumber, scores);
+      displayBoardNoControls(board, gameNumber, scores);
   }
 }
 
 
-function displayPhoneBoard(gameNumber, scores) {
+function displayPhoneBoard(board, gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
   displayScores(gameNumber, scores);
   console.log(`          |       |       `);
-  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
+  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(board, 1)}   ${displayNumber(board, 2)}   ${displayNumber(board, 3)}`);
   console.log(`          |       |       `);
   console.log(`   -------+-------+-------`);
   console.log(`          |       |`);
-  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
+  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(board, 4)}   ${displayNumber(board, 5)}   ${displayNumber(board, 6)}`);
   console.log(`          |       |       `);
   console.log(`   -------+-------+-------`);
   console.log(`          |       |       `);
-  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
+  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(board, 7)}   ${displayNumber(board, 8)}   ${displayNumber(board, 9)}`);
   console.log(`          |       |       \n`);
 }
 
 
-function displayNumPadBoard(gameNumber, scores) {
+function displayNumPadBoard(board, gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
   displayScores(gameNumber, scores);
   console.log(`          |       |       `);
-  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
+  console.log(`      ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(board, 7)}   ${displayNumber(board, 8)}   ${displayNumber(board, 9)}`);
   console.log(`          |       |       `);
   console.log(`   -------+-------+-------`);
   console.log(`          |       |`);
-  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(4)}   ${displayNumber(5)}   ${displayNumber(6)}`);
+  console.log(`      ${board[4]}   |   ${board[5]}   |   ${board[6]}          ${displayNumber(board, 4)}   ${displayNumber(board, 5)}   ${displayNumber(board, 6)}`);
   console.log(`          |       |       `);
   console.log(`   -------+-------+-------`);
   console.log(`          |       |       `);
-  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
+  console.log(`      ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(board, 1)}   ${displayNumber(board, 2)}   ${displayNumber(board, 3)}`);
   console.log(`          |       |       \n`);
 }
 
 
-function displayBoardNoControls(gameNumber, scores) {
+function displayBoardNoControls(board, gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
   displayScores(gameNumber, scores);
@@ -184,7 +182,7 @@ function displayBoardNoControls(gameNumber, scores) {
 }
 
 
-function displayNumber(square) {
+function displayNumber(board, square) {
   if ((board[square] === EMPTY)) {
     return square;
   } else {
@@ -199,58 +197,58 @@ function displayScores(gameNumber, scores) {
 }
 
 
-function emptySquares() {
+function emptySquares(board) {
   return Object.keys(board).filter(key => board[key] === EMPTY);
 }
 
 
-function recordMove(player) {
+function recordMove(board, player) {
   switch (player) {
     case "human":
-      getHumanMove();
+      getHumanMove(board);
       break;
     case "computer":
-      calculateComputerMove();
+      calculateComputerMove(board);
   }
 }
 
 
-function getHumanMove() {
+function getHumanMove(board) {
   console.log(`Pick an empty square:`);
-  let square = getValidAnswer(emptySquares());
+  let square = getValidAnswer(emptySquares(board));
   board[square] = CONTESTANTS.human.symbol;
 }
 
 
-function calculateComputerMove() {
-  let square = emptySquares()[
-                 Math.floor(emptySquares().length * Math.random())
+function calculateComputerMove(board) {
+  let square = emptySquares(board)[
+                 Math.floor(emptySquares(board).length * Math.random())
                ];
 
-  if (emptySquares().includes("5")) {
+  if (emptySquares(board).includes("5")) {
     square = "5";
   }
 
-  if (winningMoveFound("human")) {
-    square = winningMoveFound("human");
+  if (winningMoveFound(board, "human")) {
+    square = winningMoveFound(board, "human");
   }
 
-  if (winningMoveFound("computer")) {
-    square = winningMoveFound("computer");
+  if (winningMoveFound(board, "computer")) {
+    square = winningMoveFound(board, "computer");
   }
 
   board[square] = CONTESTANTS.computer.symbol;
 }
 
 
-function winningMoveFound(player) {
+function winningMoveFound(board, player) {
   let testBoard = Object.assign({}, board);
 
-  for (let index = 0; index < emptySquares().length; index += 1) {
-    testBoard[emptySquares()[index]] = CONTESTANTS[player].symbol;
+  for (let index = 0; index < emptySquares(board).length; index += 1) {
+    testBoard[emptySquares(board)[index]] = CONTESTANTS[player].symbol;
 
-    if (isWinner(player, testBoard)) {
-      return emptySquares()[index];
+    if (isWinner(testBoard, player)) {
+      return emptySquares(board)[index];
 
     } else {
       testBoard = Object.assign({}, board);
@@ -261,7 +259,7 @@ function winningMoveFound(player) {
 }
 
 
-function isWinner(player, board) {
+function isWinner(board, player) {
   let isWinner = false;
 
   let symbolSquares = Object.keys(board).filter(key =>
@@ -282,8 +280,8 @@ function setNextPlayer(player) {
 }
 
 
-function boardFull() {
-  return emptySquares().length === 0;
+function boardFull(board) {
+  return emptySquares(board).length === 0;
 }
 
 
@@ -345,24 +343,24 @@ while (true) { // match
 
   while (true) { // game
 
-    board = newBoard();
+    let board = newBoard();
 
     while (true) { // moves
-      displayBoard(layout, gameNumber, scores);
-      recordMove(currentPlayer);
+      displayBoard(board, layout, gameNumber, scores);
+      recordMove(board, currentPlayer);
 
-      if (isWinner(currentPlayer, board) || boardFull()) break;
+      if (isWinner(board, currentPlayer) || boardFull(board)) break;
 
       currentPlayer = setNextPlayer(currentPlayer);
     }
 
-    displayBoard("no controls", gameNumber, scores);
+    displayBoard(board, "no controls", gameNumber, scores);
 
-    if (isWinner(currentPlayer, board)) {
+    if (isWinner(board, currentPlayer)) {
       displayWinner(currentPlayer);
       updateScores(scores, currentPlayer);
 
-    } else if (boardFull()) {
+    } else if (boardFull(board)) {
       console.log("The board is full, nobody won this game.\n");
 
     }
@@ -374,7 +372,7 @@ while (true) { // match
       continue;
 
     } else {
-      displayBoard("no controls", gameNumber, scores);
+      displayBoard(board, "no controls", gameNumber, scores);
       displayMatchWinner(scores);
 
     }
