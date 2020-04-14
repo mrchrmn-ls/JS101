@@ -5,6 +5,7 @@ const rlsync = require("readline-sync");
 
 const FIELD_SIZE = 9;
 const EMPTY = " ";
+const GAMES_TO_WIN = 3;
 
 const WINNING_SQUARES = [
   [1, 2, 3], [4, 5, 6], [7, 8, 9], // rows
@@ -90,6 +91,7 @@ function determineFirstPlayer() {
 
 function askForFirstPlayer() {
   console.clear();
+  console.log("Let's play Tic Tac Toe!\n");
   console.log("Who should go first? Chose [h]uman, [c]omputer or [r]andom.");
 
   let firstPlayer = getValidAnswer(["h", "c", "r"]);
@@ -116,24 +118,24 @@ function newBoard() {
 }
 
 
-function displayBoard(layout) {
+function displayBoard(layout, gameNumber, scores) {
   switch (layout) {
     case "p":
-      displayPhoneBoard();
+      displayPhoneBoard(gameNumber, scores);
       break;
     case "n":
-      displayNumPadBoard();
+      displayNumPadBoard(gameNumber, scores);
       break;
-    default:
-      displayBoardNoControls();
+    case "no controls":
+      displayBoardNoControls(gameNumber, scores);
   }
 }
 
 
-function displayPhoneBoard() {
+function displayPhoneBoard(gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  console.log(`You are ${CONTESTANTS.human.symbol} and the computer is ${CONTESTANTS.computer.symbol}.\n`);
+  displayscores(gameNumber, scores);
   console.log(`       |       |       `);
   console.log(`   ${board[1]}   |   ${board[2]}   |   ${board[3]}          ${displayNumber(1)}   ${displayNumber(2)}   ${displayNumber(3)}`);
   console.log(`       |       |       `);
@@ -148,10 +150,10 @@ function displayPhoneBoard() {
 }
 
 
-function displayNumPadBoard() {
+function displayNumPadBoard(gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  console.log(`You are ${CONTESTANTS.human.symbol} and the computer is ${CONTESTANTS.computer.symbol}.\n`);
+  displayscores(gameNumber, scores);
   console.log(`       |       |       `);
   console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}          ${displayNumber(7)}   ${displayNumber(8)}   ${displayNumber(9)}`);
   console.log(`       |       |       `);
@@ -166,10 +168,10 @@ function displayNumPadBoard() {
 }
 
 
-function displayBoardNoControls() {
+function displayBoardNoControls(gameNumber, scores) {
   console.clear();
   console.log("Let's play Tic Tac Toe!\n");
-  console.log(`You are ${CONTESTANTS.human.symbol} and the computer is ${CONTESTANTS.computer.symbol}.\n`);
+  displayscores(gameNumber, scores);
   console.log(`       |       |       `);
   console.log(`   ${board[7]}   |   ${board[8]}   |   ${board[9]}`);
   console.log(`       |       |       `);
@@ -193,6 +195,12 @@ function displayNumber(square) {
 }
 
 
+function displayscores(gameNumber, scores) {
+  console.log(`This is game ${gameNumber}. The first to reach ${GAMES_TO_WIN} points wins.\n`);
+  console.log(`HUMAN (${CONTESTANTS.human.symbol})   ${scores[0]} : ${scores[1]}   (${CONTESTANTS.computer.symbol}) COMPUTER \n`);
+}
+
+
 function emptySquares() {
   return Object.keys(board).filter(key => board[key] === EMPTY);
 }
@@ -206,11 +214,6 @@ function recordMove(player) {
     case "computer":
       calculateComputerMove();
   }
-}
-
-
-function setNextPlayer(player) {
-  return (player === "human") ? "computer" : "human";
 }
 
 
@@ -228,7 +231,7 @@ function calculateComputerMove() {
 }
 
 
-function checkWin(player) {
+function isWinner(player) {
   let isWinner = false;
 
   let symbolSquares = Object.keys(board).filter(key =>
@@ -244,20 +247,48 @@ function checkWin(player) {
 }
 
 
-function displayWinner(player) {
-  console.log("WE HAVE A WINNER:");
-  switch (player) {
-    case "human":
-      console.log("It's you! You have won, congratulations!\n");
-      break;
-    case "computer":
-      console.log("Sorry, it's the computer actually.\n");
-  }
+function setNextPlayer(player) {
+  return (player === "human") ? "computer" : "human";
 }
 
 
 function boardFull() {
   return emptySquares().length === 0;
+}
+
+
+function displayWinner(player) {
+  switch (player) {
+    case "human":
+      console.log("You have won this game.\n");
+      break;
+    case "computer":
+      console.log("The computer won this game.\n");
+  }
+}
+
+
+function updateScores(scores, currentPlayer) {
+  switch (currentPlayer) {
+    case "human":
+      scores[0] += 1;
+      break;
+    case "computer":
+      scores[1] += 1;
+  }
+}
+
+
+function displayMatchWinner(scores) {
+  let matchWinner = (scores[0] > scores[1]) ? "human" : "computer";
+
+  switch (matchWinner) {
+    case "human":
+      console.log("CONGRATULATIONS!\nYou have won the match!\n");
+      break;
+    case "computer":
+      console.log("SORRY,\nbut the computer won this match.\n");
+  }
 }
 
 
@@ -275,27 +306,50 @@ function playAgain() {
 
 
 let layout = chooseControlLayout();
+let currentPlayer = determineFirstPlayer();
 
 while (true) {
 
-  board = newBoard();
-  let currentPlayer = determineFirstPlayer();
+  let scores = [0, 0];
+  let gameNumber = 1;
 
   while (true) {
-    displayBoard(layout);
 
-    recordMove(currentPlayer);
-    if (checkWin(currentPlayer) || boardFull()) break;
+    board = newBoard();
 
-    currentPlayer = setNextPlayer(currentPlayer);
-  }
+    while (true) {
+      displayBoard(layout, gameNumber, scores);
 
-  displayBoard();
+      recordMove(currentPlayer);
+      if (isWinner(currentPlayer) || boardFull()) break;
 
-  if (checkWin(currentPlayer)) {
-    displayWinner(currentPlayer);
-  } else if (boardFull()) {
-    console.log("The board is full, there is no winner.\n");
+      currentPlayer = setNextPlayer(currentPlayer);
+    }
+
+    displayBoard("no controls", gameNumber, scores);
+
+    if (isWinner(currentPlayer)) {
+
+      displayWinner(currentPlayer);
+      updateScores(scores, currentPlayer);
+
+    } else if (boardFull()) {
+
+      console.log("The board is full, there is no winner.\n");
+
+    }
+
+    if (Math.max(...scores) < GAMES_TO_WIN) {
+      gameNumber += 1;
+      currentPlayer = setNextPlayer(currentPlayer);
+      rlsync.question("Press enter to proceed to the next round.");
+      continue;
+    } else {
+      displayBoard("no controls", gameNumber, scores);
+      displayMatchWinner(scores);
+    }
+
+    break;
   }
 
   if (playAgain()) continue;
