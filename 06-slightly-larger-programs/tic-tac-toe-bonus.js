@@ -140,8 +140,8 @@ function display789row(board, layout) {
 }
 
 
-function displayNumber(board, square, layout) {
-  if ((board[square] === EMPTY) && (layout !== "no controls")) {
+function displayNumber(board, square) {
+  if ((board[square] === EMPTY)) {
     return square;
   } else {
     return EMPTY;
@@ -312,7 +312,7 @@ while (true) { // match
       currentPlayer = setNextPlayer(currentPlayer);
     }
 
-    displayBoard(board, "no controls", gameNumber, scores);
+    displayBoard(board, layout, gameNumber, scores);
 
     if (isWinner(board, currentPlayer)) {
       displayWinner(currentPlayer);
@@ -326,11 +326,12 @@ while (true) { // match
     if (Math.max(...scores) < GAMES_TO_WIN) {
       gameNumber += 1;
       currentPlayer = setNextPlayer(currentPlayer);
+      console.log(`Next game's first player: ${currentPlayer}.`);
       rlsync.question("Press Enter to proceed to the next round.");
       continue;
 
     } else {
-      displayBoard(board, "no controls", gameNumber, scores);
+      displayBoard(board, layout, gameNumber, scores);
       displayMatchWinner(scores);
 
     }
