@@ -101,24 +101,14 @@ function displayCards(dealer, player, revealDealer) {
 
 
 function displayRowOfCards(contestant, revealDealer) {
-  displayBasicLine("   +-----+", contestant.cards.length);
-  displayBasicLine("   |     |", contestant.cards.length);
+  console.log("   +-----+".repeat(contestant.cards.length));
+  console.log("   |     |".repeat(contestant.cards.length));
   displayValueLine(contestant, revealDealer);
   displaySuitsLine(contestant, revealDealer);
-  displayBasicLine("   |     |", contestant.cards.length);
-  displayBasicLine("   +-----+", contestant.cards.length);
+  console.log("   |     |".repeat(contestant.cards.length));
+  console.log("   +-----+".repeat(contestant.cards.length));
 
   console.log(`${contestant.name}'s card score: ${revealDealer ? contestant.cardScore : `at least ${Number(CARD_VALUES[contestant.cards[0][1]]) + 1}`}`);
-}
-
-
-function displayBasicLine(string, repeats) {
-  let line = "";
-  for (let i = 0; i < repeats; i += 1) {
-    line += string;
-  }
-
-  console.log(line);
 }
 
 
