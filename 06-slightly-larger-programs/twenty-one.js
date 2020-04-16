@@ -115,6 +115,7 @@ function displayRowOfCards(contestant, revealDealer) {
 
 
 function compare(contestant1, contestant2) {
+  if (score(contestant1) === score(contestant2)) return "push";
   return score(contestant1) > score(contestant2) ? contestant1 : contestant2;
 }
 
@@ -126,6 +127,9 @@ function declareWinner(contestant) {
       break;
     case "Dealer":
       console.log("SORRY, the house has won.\n");
+      break;
+    default:
+      console.log("Push! No one wins, you keep your money.\n");
   }
 }
 
@@ -218,9 +222,9 @@ while (true) { // play again loop
       if (hitMe()) {
         deal(deck, player);
         displayCards(dealer, player, false);
-      } else {
-        break;
+        continue;
       }
+      break;
     }
 
     if (bust(player)) break;
