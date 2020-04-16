@@ -40,6 +40,7 @@ function generateDeck() {
       result.push([SUIT_SYMOBLS[suit], card]);
     }
   }
+
   return result;
 }
 
@@ -72,22 +73,29 @@ function updateCardScore(contestant) {
     result += Number(CARD_VALUES[card[1]]);
     aces += (card[1] === "A") ? 1 : 0;
   });
+
   while ((result > MAX_SCORE) && (aces > 0)) {
     result -= 10;
     aces -= 1;
   }
+
   contestant.cardScore = result;
 }
 
 
 function displayCards(dealer, player, revealDealer) {
   console.clear();
+
   console.log("Welcome to Twenty-One!\n");
-  console.log(`We're playing best of ${GAMES_TO_WIN * 2 - 1}.\nThe current overall score is:\n`);
+  console.log(`We're playing best of ${(GAMES_TO_WIN * 2) - 1}.\nThe current overall score is:\n`);
   console.log(`PLAYER   ${player.matchScore} : ${dealer.matchScore}   DEALER\n`);
+
   displayRowOfCards(dealer, revealDealer);
+
   console.log("\n");
+
   displayRowOfCards(player, true);
+
   console.log();
 }
 
@@ -99,6 +107,7 @@ function displayRowOfCards(contestant, revealDealer) {
   displaySuitsLine(contestant, revealDealer);
   displayBasicLine("   |     |", contestant.cards.length);
   displayBasicLine("   +-----+", contestant.cards.length);
+
   console.log(`${contestant.name}'s card score: ${revealDealer ? contestant.cardScore : `at least ${Number(CARD_VALUES[contestant.cards[0][1]]) + 1}`}`);
 }
 
@@ -108,6 +117,7 @@ function displayBasicLine(string, repeats) {
   for (let i = 0; i < repeats; i += 1) {
     line += string;
   }
+
   console.log(line);
 }
 
@@ -119,6 +129,7 @@ function displayValueLine(contestant, revealDealer) {
                   `   | ${contestant.cards[i][1] === "10" ? "1 0" : ` ${contestant.cards[i][1]} `} |` :
                   "   |     |";
   }
+
   console.log(line);
 }
 
@@ -130,6 +141,7 @@ function displaySuitsLine(contestant, revealDealer) {
             `   |  ${contestant.cards[i][0]}  |` :
             "   |     |";
   }
+
   console.log(line);
 }
 
@@ -162,13 +174,16 @@ function weHaveMatchWinner(contestant1, contestant2) {
 }
 
 
+function startNextRound() {
+  rlsync.question("Press enter to start the next round.");
+}
+
+
 function declareGameWinner(contestant) {
   if (contestant === "push") {
     console.log("Push! No one wins this game.\n");
     return null;
   }
-
-  contestant.matchScore += 1;
 
   switch (contestant.name) {
     case "Player":
@@ -177,6 +192,9 @@ function declareGameWinner(contestant) {
     case "Dealer":
       console.log("The house has won.\n");
   }
+
+  contestant.matchScore += 1;
+  return null;
 }
 
 
@@ -193,7 +211,7 @@ function declareMatchWinner(contestant) {
       console.log("CONGRATULATIONS!\nYou have won the match.\n");
       break;
     case "Dealer":
-      console.log("SORRY,\ but the house has won the match.\n");
+      console.log("SORRY,\n but the house has won the match.\n");
   }
 }
 
@@ -271,15 +289,15 @@ while (true) { // play again loop
         displayCards(dealer, player, false);
         continue;
       }
+
       break;
     }
 
     if (bust(player)) {
       dealer.matchScore += 1;
-
       if (weHaveMatchWinner(dealer, player)) break;
 
-      rlsync.question("Press enter to start the next round.");
+      startNextRound();
       continue;
     }
 
@@ -295,22 +313,19 @@ while (true) { // play again loop
 
     if (bust(dealer)) {
       player.matchScore += 1;
-
       if (weHaveMatchWinner(dealer, player)) break;
 
-      rlsync.question("Press enter to start the next round.");
+      startNextRound();
       continue;
     }
 
     declareGameWinner(compare(player, dealer, "cardScore"));
-
     if (weHaveMatchWinner(dealer, player)) break;
 
-    rlsync.question("Press enter to start the next round.");
+    startNextRound();
   }
 
   displayCards(dealer, player, true);
-
   declareMatchWinner(compare(player, dealer, "matchScore"));
 
   if (playAgain()) continue;
