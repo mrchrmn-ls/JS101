@@ -180,7 +180,7 @@ function declareGameWinner(contestant) {
       console.log("You have won this game.\n");
       break;
     case "Dealer":
-      console.log("The house has won.\n");
+      console.log("The house has won this game.\n");
   }
 
   contestant.matchScore += 1;
@@ -201,7 +201,7 @@ function declareMatchWinner(contestant) {
       console.log("CONGRATULATIONS!\nYou have won the match.\n");
       break;
     case "Dealer":
-      console.log("SORRY,\n but the house has won the match.\n");
+      console.log("SORRY,\nbut the house has won the match.\n");
   }
 }
 
