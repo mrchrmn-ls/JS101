@@ -282,7 +282,7 @@ while (true) { // play again loop
     updateCardScore(dealer);
     displayCards(dealer, player, false);
 
-    while (player.cardScore < MAX_SCORE) { // player loop
+    while (player.cardScore <= MAX_SCORE) { // player loop
       if (hitMe()) {
         deal(deck, player);
         updateCardScore(player);
