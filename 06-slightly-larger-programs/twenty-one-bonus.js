@@ -83,12 +83,12 @@ function updateCardScore(contestant) {
 }
 
 
-function displayGame(dealer, player, revealDealer) {
+function displayGame(dealer, player, revealAll) {
   console.clear();
 
   displayIntro(dealer, player);
 
-  displayRowOfCards(dealer, revealDealer);
+  displayRowOfCards(dealer, revealAll);
 
   console.log("\n");
 
@@ -104,22 +104,22 @@ function displayIntro(dealer, player) {
   console.log(`PLAYER   ${player.matchScore} : ${dealer.matchScore}   DEALER\n`);
 }
 
-function displayRowOfCards(contestant, revealDealer) {
+function displayRowOfCards(contestant, revealAll) {
   console.log("   +-----+".repeat(contestant.cards.length));
   console.log("   |     |".repeat(contestant.cards.length));
-  displayValueLine(contestant, revealDealer);
-  displaySuitsLine(contestant, revealDealer);
+  displayValueLine(contestant, revealAll);
+  displaySuitsLine(contestant, revealAll);
   console.log("   |     |".repeat(contestant.cards.length));
   console.log("   +-----+".repeat(contestant.cards.length));
 
-  console.log(`${contestant.name}'s card score: ${revealDealer ? contestant.cardScore : `at least ${Number(CARD_VALUES[contestant.cards[0][1]]) + 1}`}`);
+  console.log(`${contestant.name}'s card score: ${revealAll ? contestant.cardScore : `at least ${Number(CARD_VALUES[contestant.cards[0][1]]) + 1}`}`);
 }
 
 
-function displayValueLine(contestant, revealDealer) {
+function displayValueLine(contestant, revealAll) {
   let line = "";
   for (let i = 0; i < contestant.cards.length; i += 1) {
-    line += (revealDealer || (i === 0)) ?
+    line += (revealAll || (i === 0)) ?
                   `   | ${contestant.cards[i][1] === "10" ? "1 0" : ` ${contestant.cards[i][1]} `} |` :
                   "   |     |";
   }
@@ -128,10 +128,10 @@ function displayValueLine(contestant, revealDealer) {
 }
 
 
-function displaySuitsLine(contestant, revealDealer) {
+function displaySuitsLine(contestant, revealAll) {
   let line = "";
   for (let i = 0; i < contestant.cards.length; i += 1) {
-    line += (revealDealer || (i === 0)) ?
+    line += (revealAll || (i === 0)) ?
             `   |  ${contestant.cards[i][0]}  |` :
             "   |     |";
   }
