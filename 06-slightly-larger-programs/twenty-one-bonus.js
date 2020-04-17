@@ -4,7 +4,7 @@ const rlsync = require("readline-sync");
 
 const MAX_SCORE = 21;
 const DEALER_MIN_SCORE = 17;
-const GAMES_TO_WIN = 3;
+const GAMES_TO_WIN = 5;
 
 const SUIT_SYMOBLS = {
   Clubs: "\u2663",
@@ -83,12 +83,10 @@ function updateCardScore(contestant) {
 }
 
 
-function displayCards(dealer, player, revealDealer) {
+function displayGame(dealer, player, revealDealer) {
   console.clear();
 
-  console.log("Welcome to Twenty-One!\n");
-  console.log(`We're playing best of ${(GAMES_TO_WIN * 2) - 1}.\nThe current overall score is:\n`);
-  console.log(`PLAYER   ${player.matchScore} : ${dealer.matchScore}   DEALER\n`);
+  displayIntro(dealer, player);
 
   displayRowOfCards(dealer, revealDealer);
 
@@ -99,6 +97,12 @@ function displayCards(dealer, player, revealDealer) {
   console.log();
 }
 
+
+function displayIntro(dealer, player) {
+  console.log("Welcome to Twenty-One!\n");
+  console.log(`We're playing best of ${(GAMES_TO_WIN * 2) - 1}.\nThe current overall score is:\n`);
+  console.log(`PLAYER   ${player.matchScore} : ${dealer.matchScore}   DEALER\n`);
+}
 
 function displayRowOfCards(contestant, revealDealer) {
   console.log("   +-----+".repeat(contestant.cards.length));
@@ -270,13 +274,13 @@ while (true) { // play again loop
     dealFirstFour(deck, player, dealer);
     updateCardScore(player);
     updateCardScore(dealer);
-    displayCards(dealer, player, false);
+    displayGame(dealer, player, false);
 
     while (player.cardScore <= MAX_SCORE) { // player loop
       if (hitMe()) {
         deal(deck, player);
         updateCardScore(player);
-        displayCards(dealer, player, false);
+        displayGame(dealer, player, false);
         continue;
       }
 
@@ -292,13 +296,13 @@ while (true) { // play again loop
     }
 
 
-    displayCards(dealer, player, true);
+    displayGame(dealer, player, true);
 
     while (dealer.cardScore < DEALER_MIN_SCORE) { // dealer loop
       rlsync.question("Press enter to reveal dealer's next card.");
       deal(deck, dealer);
       updateCardScore(dealer);
-      displayCards(dealer, player, true);
+      displayGame(dealer, player, true);
     }
 
     if (bust(dealer)) {
@@ -315,7 +319,7 @@ while (true) { // play again loop
     startNextRound();
   }
 
-  displayCards(dealer, player, true);
+  displayGame(dealer, player, true);
   declareMatchWinner(compare(player, dealer, "matchScore"));
 
   if (playAgain()) continue;
