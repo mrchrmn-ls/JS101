@@ -45,13 +45,18 @@ function generateDeck() {
 }
 
 
-function shuffle(deck) {
-  for (let i = deck.length - 1; i > 0; i -= 1) {
+function shuffle(deckOfCards) {
+  for (let i = deckOfCards.length - 1; i > 0; i -= 1) {
     let j = Math.floor((i + 1) * Math.random());
-    [deck[i], deck[j]] = [deck[j], deck[i]];
+    [deckOfCards[i], deckOfCards[j]] = [deckOfCards[j], deckOfCards[i]];
   }
 
-  return deck;
+  return deckOfCards;
+}
+
+
+function dealTopCard(deck) {
+  return deck.pop();
 }
 
 
@@ -107,20 +112,22 @@ function displayRowOfCards(contestant, revealAll) {
 
 function displayValueLine(contestant, revealAll) {
   let line = "";
-  for (let i = 0; i < contestant.cards.length; i += 1) {
+  let firstCard = true;
 
-    if (revealAll || i === 0) {
-      if (contestant.cards[i][1] === "10") {
+  contestant.cards.forEach(card => {
+    let value = card[1];
+
+    if (revealAll || firstCard) {
+      if (value === "10") {
         line += "   | 1 0 |";
       } else {
-        line += `   |  ${contestant.cards[i][1]}  |`;
+        line += `   |  ${value}  |`;
       }
-
+      firstCard = false;
     } else {
       line += "   |     |";
     }
-
-  }
+  });
 
   console.log(line);
 }
@@ -128,11 +135,19 @@ function displayValueLine(contestant, revealAll) {
 
 function displaySuitsLine(contestant, revealAll) {
   let line = "";
-  for (let i = 0; i < contestant.cards.length; i += 1) {
-    line += (revealAll || (i === 0)) ?
-            `   |  ${contestant.cards[i][0]}  |` :
-            "   |     |";
-  }
+  let firstCard = true;
+
+  contestant.cards.forEach(card => {
+    let symbol = card[0];
+
+    if (revealAll || firstCard) {
+      line += `   |  ${symbol}  |`;
+      firstCard = false;
+    } else {
+      line += "   |     |";
+    }
+  });
+
   console.log(line);
 }
 
@@ -144,18 +159,20 @@ function hitMe() {
 }
 
 
-function bust(contestant) {
-  if (contestant.cardScore > MAX_SCORE) {
-    switch (contestant.name) {
-      case "Player":
-        console.log("You bust! The house has won this game.\n");
-        return true;
-      case "Dealer":
-        console.log("Dealer busts! You have won this game.\n");
-        return true;
-    }
+function isBust(contestant) {
+  return contestant.cardScore > MAX_SCORE;
+}
+
+
+function declareBust(contestant) {
+  switch (contestant.name) {
+    case "Player":
+      console.log("You bust! The house has won this game.\n");
+      return true;
+    case "Dealer":
+      console.log("Dealer busts! You have won this game.\n");
+      return true;
   }
-  return false;
 }
 
 
@@ -173,7 +190,7 @@ function startNextRound() {
 function declareGameWinner(contestant) {
   if (contestant === "push") {
     console.log("Push! No one wins this game.\n");
-    return null;
+    return;
   }
 
   switch (contestant.name) {
@@ -270,19 +287,19 @@ while (true) { // play again loop
     let deck = generateDeck();
     shuffle(deck);
 
-    player.cards.push(deck.pop());
-    dealer.cards.push(deck.pop());
-    player.cards.push(deck.pop());
-    dealer.cards.push(deck.pop());
+    player.cards.push(dealTopCard(deck));
+    dealer.cards.push(dealTopCard(deck));
+    player.cards.push(dealTopCard(deck));
+    dealer.cards.push(dealTopCard(deck));
 
     player.cardScore = updateCardScore(player);
     dealer.cardScore = updateCardScore(dealer);
 
     displayGame(dealer, player, false);
 
-    while (player.cardScore <= MAX_SCORE) { // player loop
+    while (!isBust(player)) { // player loop
       if (hitMe()) {
-        player.cards.push(deck.pop());
+        player.cards.push(dealTopCard(deck));
         player.cardScore = updateCardScore(player);
         displayGame(dealer, player, false);
         continue;
@@ -291,7 +308,8 @@ while (true) { // play again loop
       break;
     }
 
-    if (bust(player)) {
+    if (isBust(player)) {
+      declareBust(player);
       dealer.matchScore += 1;
       if (weHaveMatchWinner(dealer, player)) break;
 
@@ -304,12 +322,13 @@ while (true) { // play again loop
 
     while (dealer.cardScore < DEALER_MIN_SCORE) { // dealer loop
       rlsync.question("Press enter to reveal dealer's next card.");
-      dealer.cards.push(deck.pop());
+      dealer.cards.push(dealTopCard(deck));
       dealer.cardScore = updateCardScore(dealer);
       displayGame(dealer, player, true);
     }
 
-    if (bust(dealer)) {
+    if (isBust(dealer)) {
+      declareBust(player);
       player.matchScore += 1;
       if (weHaveMatchWinner(dealer, player)) break;
 
