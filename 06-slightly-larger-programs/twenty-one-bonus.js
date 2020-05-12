@@ -85,15 +85,12 @@ function updateCardScore(contestant) {
 
 function displayGame(dealer, player, revealAll) {
   console.clear();
-
   displayIntro(dealer, player);
 
   displayRowOfCards(dealer, revealAll);
-
   console.log("\n");
 
   displayRowOfCards(player, true);
-
   console.log();
 }
 
@@ -104,13 +101,16 @@ function displayIntro(dealer, player) {
   console.log(`PLAYER   ${player.matchScore} : ${dealer.matchScore}   DEALER\n`);
 }
 
+
 function displayRowOfCards(contestant, revealAll) {
-  console.log("   +-----+".repeat(contestant.cards.length));
-  console.log("   |     |".repeat(contestant.cards.length));
+  let numberOfCards = contestant.cards.length;
+
+  console.log("   +-----+".repeat(numberOfCards));
+  console.log("   |     |".repeat(numberOfCards));
   displayValueLine(contestant, revealAll);
   displaySuitsLine(contestant, revealAll);
-  console.log("   |     |".repeat(contestant.cards.length));
-  console.log("   +-----+".repeat(contestant.cards.length));
+  console.log("   |     |".repeat(numberOfCards));
+  console.log("   +-----+".repeat(numberOfCards));
 
   console.log(`${contestant.name}'s card score: ${revealAll ? contestant.cardScore : `at least ${Number(CARD_VALUES[contestant.cards[0][1]]) + 1}`}`);
 }
@@ -123,7 +123,6 @@ function displayValueLine(contestant, revealAll) {
                   `   | ${contestant.cards[i][1] === "10" ? "1 0" : ` ${contestant.cards[i][1]} `} |` :
                   "   |     |";
   }
-
   console.log(line);
 }
 
@@ -135,7 +134,6 @@ function displaySuitsLine(contestant, revealAll) {
             `   |  ${contestant.cards[i][0]}  |` :
             "   |     |";
   }
-
   console.log(line);
 }
 
@@ -194,6 +192,7 @@ function declareGameWinner(contestant) {
 
 function compare(contestant1, contestant2, scoreType) {
   if (contestant1[scoreType] === contestant2[scoreType]) return "push";
+
   return contestant1[scoreType] > contestant2[scoreType] ?
          contestant1 : contestant2;
 }
@@ -228,8 +227,8 @@ function joinOr(arr, delimiter = ", ", word = "or") {
   for (let index = 0; index < arr.length - 1; index += 1) {
     result += arr[index] + delimiter;
   }
-  result += word + " " + arr[arr.length - 1];
 
+  result += word + " " + arr[arr.length - 1];
   return result;
 }
 
